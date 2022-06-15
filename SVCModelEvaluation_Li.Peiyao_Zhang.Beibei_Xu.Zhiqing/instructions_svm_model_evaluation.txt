@@ -1,0 +1,148 @@
+instructions:
+Classification-SVM_mod_SPY_incomplete.ipynb is the first trading system you see with complete model evaluation
+The system tries to predict intra-day returns using an SVC classifier and classic technical momentum indicators RSI, CORR, SAR & ADX 
+as well as some simple volatility indicators
+This homework requires you to run the notebook (after changing the input data) 
+and answer some questions whilst changing some parameters.
+
+You need to read before you attempt to do this.
+READ: ModelEvaluation.pdf
+READ: Chapter 11 - Model Evaluation.ipynb
+READ: TimeSeriesCValidation.pdf
+READ: the class presentation and the LINKS provided about the RSI, ADX and SAR:
+https://www.investopedia.com/terms/r/rsi.asp 
+https://www.investopedia.com/articles/trading/07/adx-trend-indicator.asp
+https://www.investopedia.com/terms/a/adx.asp 
+https://www.investopedia.com/terms/p/parabolicindicator.asp 
+
+ALSO: make sure you have installed the TALIB module as per the instructions given at the beginning of the course
+ALSO: if you get an error regarding function plot_confusion_matrix (but only if you do):
+within your py36 environmate update scikit-learn:
+<py36>conda update scikit-learn
+
+Having read the material, you want to do the following:
+1. Run Classification-Svm_mod_SPY_incomplete.ipynb without change (that is, run it w/ SPY_800.csv)
+2. It will take a good while to run
+3. The SPY_800.csv data is price data of the SPY (=SP500 ETF), specifically: 
+intra day, frequency=30 minutes, from 4AM to 7:30 practically around the clock. 
+This data is expensive, cannot be gotten in the internet, please do not post.
+You will have access to the intraday SPY data from 1998 to 2020 but you will only run the notebook 
+on 800 data items at a time because the SVC fits itself to the data slowly.
+
+In order to help you run the notebook more quickly while changing its parameters
+we advise you to change the input data to NSE_cash.csv, 
+which is intraday  data frequency=minute of the National Stock Exchange of India cash market.
+If you do this, we adivse you to not only change the line defining the data input
+Df = pd.read_csv('SPY_800.csv')  ==> Df = pd.read_csv('NSE_cash.csv') 
+But change also the lookback line 
+n=5 ==> n-10
+this lookback defines (among other things) the length of the window of return periods relevant for the present timespot
+(log return periods have a similar informational function as lags)
+Note that the notebook does not try to find the length of this lookback window, 
+which might be studied by using PACF
+So the settings, n=5 or n=10 are rather arbitrary
+
+The questions you need to answer relate to various parameter inputs
+These are the questions:
+
+Regarding
+1. cvo = RandomizedSearchCV(pipeline, parameters_rs,cv=tscv, scoring=None, n_iter= 50, random_state=7) 
+specifically
+parameter parameters_rs, in particular the line
+parameters_rs = {
+              		'svc__C':c_rs,
+              		'svc__gamma':g_rs,
+              		'svc__kernel': ['rbf', 'poly']
+             	           }
+Does this line need to be modified to 
+parameters_rs = {
+              		'svc__C':c_rs,
+              		'svc__gamma':g_rs,
+              		'svc__kernel': ['rbf', 'poly', 'linear']
+             	           }
+Why or why not? 
+
+Regarding
+2. cvo = RandomizedSearchCV(pipeline, parameters_rs,cv=tscv, scoring=None, n_iter= 50, random_state=7) 
+specifically
+scoring = None
+What is the actual value of this parameter? Does it need to be changed? Why or why not?
+
+
+Regarding
+3. cvo = RandomizedSearchCV(pipeline, parameters_rs,cv=tscv, scoring=None, n_iter= 50, random_state=7) 
+specifically
+cv=tscv
+Does this parameter influence the results a lot if you change it to cv=7 or cv=tscv_fw or cv=tscv
+In theory, which is the best setting (assuming scoring function is unchanged). Read TimeSeriesCValidation.pdf
+
+Regarding
+4. cvo = RandomizedSearchCV(pipeline, parameters_rs,cv=tscv, scoring=None, n_iter= 50, random_state=7) 
+specifically
+cv=tscv_fw
+Regardless of the result of this notebook what advantage (and what disadvantage) does 
+the TimeSeriesSplit object with fixed window provide over the TimeSeriesSplit object with growing window
+
+
+Regarding
+5. classification report and confusion matrix of our SVC classifier compared to the DUMMY
+specifically
+cls_d = DummyClassifier(strategy='uniform')
+why is the strategy set to uniform and not some other (see)
+https://scikit-learn.org/stable/modules/generated/sklearn.dummy.DummyClassifier.html
+
+Regarding
+6. classification report and confusion matrix of our SVC classifier compared to the DUMMY
+specifically
+the classification report table and confusion matrix plot
+what are we comparing between our classifier and the DUMMY?
+
+
+Regarding
+7. classification report and confusion matrix of our SVC classifier compared to the DUMMY
+specifically
+the classification report table and confusion matrix plot
+Can you get the classifier to become better than the DUMMY (even slightly better)
+by running the notebook many times. For this you need to change the random_state=7 in:
+cvo = RandomizedSearchCV(pipeline, parameters_rs,cv=tscv, scoring=None, n_iter= 50, random_state=7) 
+to some other number. (If you set it to random_state=None, random numbers will be used)
+How  much better?
+
+Regarding
+8. Trading results
+specifically
+plt.plot(Df['Cu_Ret1'],color='r',label='Strategy Returns')
+plt.plot(Df['Cu_Ret'],color='g',label='Market Returns')
+Wherever the classifier better than the DUMMY (even slightly better)
+are the trading results better too?
+Look at: 
+The plot of the cummulative returns
+The p_value (which should be < .05 to be siginificant) of the White Reality Check
+low p_value means the profits are not by chance, not due to any the trend in the data
+
+Regarding
+9. How the length of the lookback window 
+n= 10 (originally n=5)
+Change the value to n=2, to n=5, to n=10, to n=50
+What seems to be the best window setting 
+(you may have to run 
+the notebook a number of times in each window setting by changing to random_state=None)
+
+10. Assuming we want a trading system to get the big moves right (at least) not giving
+too much importance to the small moves, what is the problem with our SVC classifier?
+What can one do to solve this?
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
