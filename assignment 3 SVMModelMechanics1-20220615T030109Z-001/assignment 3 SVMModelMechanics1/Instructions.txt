@@ -1,0 +1,62 @@
+Read and study the following material in quercus:
+-Linear Models for Price Prediction Mechanics.pptx
+-log_regression_with_grid.py in LinearModelMechanics.rar
+-Financial Metrics.pptx
+
+open and run SVC_mod.ipynb
+Open and run svc_mod_grid_incomplete.py (will take some time to run)
+If you have trouble running these programs try setting n_jobs=None instead of -1
+Windows sometimes object to the setting of n_jobs=-1
+Make sure you understand what these programs are doing
+
+You will now add some code to svc_mod_grid_incomplete.py to be able to trade
+the signals that the machine learning model (SVC) is generating
+
+The following instructions are about svc_mod_grid_incomplete.py:
+After you run the code once 
+Comment out the code from line 105 to 188 
+by placing three double quotes before and after these lines 
+(the commented out code will turn green in Spyder)
+
+Use the information on lines 76 to 104 to:
+calculate and print CAGR (formula is in Financial Metrics.pptx)
+Calculate and print Sharpe_ratio (formula is in Financial Metrics.pptx)
+plot the Df["Cumulative_returns"] (the equity curve of the trading strategy)
+Note: in order to plot better, the returns are multiplied by 100, but this is only for visibility
+
+Un comment the lines 105 to 142
+In a similar fashion to the code in 76 to 104
+use the SVC in lines 105 to 142 and calculate:
+
+Predicted_signals (predicted by the fitted SVC)
+return (=log returns of the asset being traded)
+Strategy_Return (returns of trading strategy)
+return_mean (mean of the returns of trading strategy)
+return_std (standard deviation of the returns of the trading strategy)
+start_date (of the testing)
+end_date (of the testing)
+days (of the testing)
+period (days in a year)
+years (number of years)
+annualization_factor (for the Sharpe Ratio formula, see Financial Metrics.pptx)
+cummulative_returns (equity curve of the strategy)
+begin_balance (of the cumulative returns)
+ending_balance (of the cumulative returns)
+calculate and print the CAGR (see Financial Metrics.pptx)
+Calcualte and print the Sharpe_ratio (see Financial Metrics.pptx)
+
+Plot the Df['Cumulative_returns']
+
+Which result is better, the first or the second one and why?
+answer this question in a comment preceded  by # at the very bottom of the file
+
+After you finish coding, save your code with the name
+svc_mod_grid_complete.py
+place this file in the original folder (SVMModelMechanics1) along with
+the rest of the original files
+make a zip (or rar) of the whole folder and upload it to the link provided in quercus
+remember to put your name and that of your team mate (if you have one)
+as the name of the zip (or rar) file
+
+
+
